@@ -1,0 +1,39 @@
+<% layout("/layouts/boilerplate") %>
+
+    <div class="container mt-5">
+        <h1>Pay for <%= listing.title %>
+        </h1>
+        <p>Total Amount: ₹<%= totalPrice %> for <%= numberOfDays %> day(s)</p>
+        <button id="rzp-button" class="btn btn-success">Pay Now</button>
+    </div>
+
+    <!-- Hidden form for POST to /payment-success -->
+    <form id="payment-success-form" action="/listings/<%= listing._id %>/payment-success" method="POST"
+        style="display: none;">
+        <input type="hidden" name="razorpay_payment_id" id="razorpay_payment_id">
+    </form>
+
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <script>
+        const options = {
+            key: "<%= key_id %>",
+            amount: "<%= order.amount %>",
+            currency: "INR",
+            name: "<%= listing.title %>",
+            description: "Wanderlust Reservation Payment",
+            order_id: "<%= order.id %>",
+            handler: function (response) {
+                document.getElementById("razorpay_payment_id").value = response.razorpay_payment_id;
+                document.getElementById("payment-success-form").submit();
+            },
+            theme: {
+                color: "#0d6efd"
+            }
+        };
+
+        const rzp = new Razorpay(options);
+        document.getElementById("rzp-button").onclick = function (e) {
+            rzp.open();
+            e.preventDefault();
+        };
+    </script>

@@ -1,0 +1,11 @@
+<form action="/listings/<%= listing._id %>/start-payment" method="POST">
+    <div class="mb-3">
+        <label class="form-label">From Date</label>
+        <input type="date" class="form-control" name="startDate" required>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">To Date</label>
+        <input type="date" class="form-control" name="endDate" required>
+    </div>
+    <button class="btn btn-success w-100">Proceed to Payment</button>
+</form>

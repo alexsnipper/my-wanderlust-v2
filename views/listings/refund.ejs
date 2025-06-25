@@ -1,0 +1,28 @@
+<% layout("/layouts/boilerplate") %>
+
+    <div class="container mt-5">
+        <div class="card p-4">
+            <h3>Refund Request</h3>
+            <p>
+                You are about to cancel your reservation for <strong>
+                    <%= listing.title %>
+                </strong>.
+            </p>
+            <p>
+                Reservation Dates:
+                <strong>
+                    <%= new Date(reservation.reservedFrom).toDateString() %>
+                </strong>
+                to
+                <strong>
+                    <%= new Date(reservation.reservedTo).toDateString() %>
+                </strong>.
+            </p>
+            <p>This action will refund your payment. Proceed?</p>
+
+            <form method="POST" action="/listings/<%= listing._id %>/refund/<%= reservation._id %>">
+                <button class="btn btn-danger">Yes, Cancel and Refund</button>
+                <a href="/listings/<%= listing._id %>" class="btn btn-secondary">No, Go Back</a>
+            </form>
+        </div>
+    </div>

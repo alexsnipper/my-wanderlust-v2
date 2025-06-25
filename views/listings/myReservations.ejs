@@ -1,0 +1,63 @@
+<% layout("/layouts/boilerplate") %>
+
+    <div class="container mt-5">
+        <h2 class="mb-4">🛎️ My Reservations</h2>
+
+        <% let hasReservations=false; let userReservations=[]; %>
+
+            <%  listings.forEach(listing=> {
+                listing.reservations.forEach(reservation => {
+                if (reservation.reservedBy && reservation.reservedBy._id.toString() === currUser._id.toString()) {
+                hasReservations = true;
+                userReservations.push({ listing, reservation });
+                }
+                });
+                });
+                %>
+
+                <% if (hasReservations) { %>
+                    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+                        <% userReservations.forEach(item=> { %>
+                            <div class="col">
+                                <div class="card h-100 shadow-sm">
+                                    <img src="<%= item.listing.image.url %>" class="card-img-top"
+                                        alt="<%= item.listing.title %>">
+                                    <div class="card-body">
+                                        <h5 class="card-title">
+                                            <%= item.listing.title %>
+                                        </h5>
+                                        <p class="card-text">
+                                            <%= item.listing.description.substring(0, 100) %>...
+                                        </p>
+                                        <p class="fw-bold text-success">
+                                            ₹<%= item.listing.price.toLocaleString("en-IN") %> / night
+                                        </p>
+                                        <p class="text-muted mb-2">
+                                            <strong>From:</strong>
+                                            <%= new Date(item.reservation.reservedFrom).toDateString() %><br>
+                                                <strong>To:</strong>
+                                                <%= new Date(item.reservation.reservedTo).toDateString() %>
+                                        </p>
+                                        <a href="/listings/<%= item.listing._id %>"
+                                            class="btn btn-sm btn-outline-primary me-2">View</a>
+                                        <form
+                                            action="/listings/<%= item.listing._id %>/cancel/<%= item.reservation._id %>"
+                                            method="GET" class="d-inline">
+                                            <button class="btn btn-sm btn-outline-danger"
+                                                onclick="return confirm('Cancel this reservation?')">
+                                                Cancel
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <% }) %>
+                    </div>
+                    <% } else { %>
+                        <div class="alert alert-info shadow-sm p-4">
+                            You have no reservations yet. Go explore and reserve your next trip!
+                        </div>
+                        <% } %>
+    </div>
+
+    <br>
