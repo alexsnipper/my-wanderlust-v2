@@ -89,6 +89,11 @@ app.use("/listings", listingRouter);
 app.use("/listings/:id/reviews", reviewRouter);
 app.use("/", userRouter);
 
+// root route
+app.get("/", (req, res) => {
+  res.redirect("/listings");
+});
+
 // 404 error handler (page not found)
 app.use((req, res, next) => {
   console.error(`404 Error - URL not found: ${req.originalUrl}`);
