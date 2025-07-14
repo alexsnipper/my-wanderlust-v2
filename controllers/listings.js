@@ -102,6 +102,7 @@ module.exports.updateListing = async (req, res) => {
 
   listing.title = updatedData.title;
   listing.description = updatedData.description;
+  listing.category = updatedData.category;
   listing.price = updatedData.price;
   listing.country = updatedData.country;
   listing.location = updatedData.location;
