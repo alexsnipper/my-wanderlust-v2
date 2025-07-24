@@ -20,3 +20,4 @@
 # Other
   This project also have implemented with  MVC Freamwork / REST API'S / AJAX / 
 
+© All rights reserved to [@akshaygund29](https://github.com/akshaygund29)
